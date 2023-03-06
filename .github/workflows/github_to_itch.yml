@@ -14,6 +14,7 @@ env:
  IS_MAIN: ${{ contains(github.ref, 'main') }}
  PROJECT_NAME: "fog-chess"
 
+
 jobs:
  CleanArtifacts:
   # This job clears out the previous artifacts made so you don't run out of space in your github account
