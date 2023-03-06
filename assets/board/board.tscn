@@ -1,0 +1,899 @@
+[gd_scene load_steps=9 format=3 uid="uid://h7s2730lh0as"]
+
+[ext_resource type="Script" path="res://assets/board/camera.gd" id="1_873hq"]
+[ext_resource type="Script" path="res://assets/board/board.gd" id="1_kuwnu"]
+[ext_resource type="PackedScene" uid="uid://4rngauqgraoe" path="res://assets/board/cell.tscn" id="1_mlm4o"]
+[ext_resource type="PackedScene" uid="uid://bbsub7dld6qbp" path="res://assets/pieces/piece.tscn" id="2_2o63q"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_65ikk"]
+ground_bottom_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_d2553"]
+sky_material = SubResource("ProceduralSkyMaterial_65ikk")
+
+[sub_resource type="Environment" id="Environment_v2v06"]
+background_mode = 2
+sky = SubResource("Sky_d2553")
+ambient_light_source = 2
+ambient_light_color = Color(0.478431, 0.478431, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ony2"]
+border_width_bottom = 3
+border_color = Color(0.321569, 0.321569, 0.321569, 1)
+
+[node name="Board" type="Node3D"]
+script = ExtResource("1_kuwnu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_v2v06")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+light_energy = 0.25
+
+[node name="Camera" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 4, 0, 4)
+script = ExtResource("1_873hq")
+
+[node name="Camera3D" type="Camera3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 40)
+fov = 15.0
+
+[node name="Cells" type="Node3D" parent="."]
+
+[node name="A1" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+
+[node name="WhiteCell" parent="Cells/A1" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/A1" index="1"]
+visible = true
+
+[node name="B1" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 7)
+
+[node name="C1" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 7)
+
+[node name="WhiteCell" parent="Cells/C1" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/C1" index="1"]
+visible = true
+
+[node name="D1" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 7)
+
+[node name="E1" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 7)
+
+[node name="WhiteCell" parent="Cells/E1" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/E1" index="1"]
+visible = true
+
+[node name="F1" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 7)
+
+[node name="G1" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 7)
+
+[node name="WhiteCell" parent="Cells/G1" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/G1" index="1"]
+visible = true
+
+[node name="H1" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 7)
+
+[node name="A2" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="B2" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 6)
+
+[node name="WhiteCell" parent="Cells/B2" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/B2" index="1"]
+visible = true
+
+[node name="C2" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+
+[node name="D2" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 6)
+
+[node name="WhiteCell" parent="Cells/D2" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/D2" index="1"]
+visible = true
+
+[node name="E2" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 6)
+
+[node name="F2" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 6)
+
+[node name="WhiteCell" parent="Cells/F2" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/F2" index="1"]
+visible = true
+
+[node name="G2" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 6)
+
+[node name="H2" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 6)
+
+[node name="WhiteCell" parent="Cells/H2" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/H2" index="1"]
+visible = true
+
+[node name="A3" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+
+[node name="WhiteCell" parent="Cells/A3" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/A3" index="1"]
+visible = true
+
+[node name="B3" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 5)
+
+[node name="C3" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 5)
+
+[node name="WhiteCell" parent="Cells/C3" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/C3" index="1"]
+visible = true
+
+[node name="D3" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5)
+
+[node name="E3" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 5)
+
+[node name="WhiteCell" parent="Cells/E3" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/E3" index="1"]
+visible = true
+
+[node name="F3" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
+
+[node name="G3" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 5)
+
+[node name="WhiteCell" parent="Cells/G3" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/G3" index="1"]
+visible = true
+
+[node name="H3" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 5)
+
+[node name="A4" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="B4" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 4)
+
+[node name="WhiteCell" parent="Cells/B4" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/B4" index="1"]
+visible = true
+
+[node name="C4" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+
+[node name="D4" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 4)
+
+[node name="WhiteCell" parent="Cells/D4" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/D4" index="1"]
+visible = true
+
+[node name="E4" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+
+[node name="F4" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 4)
+
+[node name="WhiteCell" parent="Cells/F4" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/F4" index="1"]
+visible = true
+
+[node name="G4" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+
+[node name="H4" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 4)
+
+[node name="WhiteCell" parent="Cells/H4" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/H4" index="1"]
+visible = true
+
+[node name="A5" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="WhiteCell" parent="Cells/A5" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/A5" index="1"]
+visible = true
+
+[node name="B5" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+
+[node name="C5" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+
+[node name="WhiteCell" parent="Cells/C5" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/C5" index="1"]
+visible = true
+
+[node name="D5" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+
+[node name="E5" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 3)
+
+[node name="WhiteCell" parent="Cells/E5" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/E5" index="1"]
+visible = true
+
+[node name="F5" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3)
+
+[node name="G5" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 3)
+
+[node name="WhiteCell" parent="Cells/G5" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/G5" index="1"]
+visible = true
+
+[node name="H5" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3)
+
+[node name="A6" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="B6" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+
+[node name="WhiteCell" parent="Cells/B6" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/B6" index="1"]
+visible = true
+
+[node name="C6" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="D6" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2)
+
+[node name="WhiteCell" parent="Cells/D6" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/D6" index="1"]
+visible = true
+
+[node name="E6" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
+
+[node name="F6" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 2)
+
+[node name="WhiteCell" parent="Cells/F6" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/F6" index="1"]
+visible = true
+
+[node name="G6" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+
+[node name="H6" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 2)
+
+[node name="WhiteCell" parent="Cells/H6" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/H6" index="1"]
+visible = true
+
+[node name="A7" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="WhiteCell" parent="Cells/A7" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/A7" index="1"]
+visible = true
+
+[node name="B7" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="C7" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+
+[node name="WhiteCell" parent="Cells/C7" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/C7" index="1"]
+visible = true
+
+[node name="D7" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
+
+[node name="E7" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1)
+
+[node name="WhiteCell" parent="Cells/E7" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/E7" index="1"]
+visible = true
+
+[node name="F7" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
+
+[node name="G7" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 1)
+
+[node name="WhiteCell" parent="Cells/G7" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/G7" index="1"]
+visible = true
+
+[node name="H7" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 1)
+
+[node name="A8" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+
+[node name="B8" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="WhiteCell" parent="Cells/B8" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/B8" index="1"]
+visible = true
+
+[node name="C8" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="D8" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="WhiteCell" parent="Cells/D8" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/D8" index="1"]
+visible = true
+
+[node name="E8" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="F8" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+
+[node name="WhiteCell" parent="Cells/F8" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/F8" index="1"]
+visible = true
+
+[node name="G8" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="H8" parent="Cells" instance=ExtResource("1_mlm4o")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
+
+[node name="WhiteCell" parent="Cells/H8" index="0"]
+visible = false
+
+[node name="BlackCell" parent="Cells/H8" index="1"]
+visible = true
+
+[node name="Pieces" type="Node3D" parent="."]
+
+[node name="PA1" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 7.5)
+
+[node name="PB1" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 7.5)
+
+[node name="Sprite3D" parent="Pieces/PB1/BodyPivot/Body" index="0"]
+frame = 7
+
+[node name="PC1" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 7.5)
+
+[node name="Sprite3D" parent="Pieces/PC1/BodyPivot/Body" index="0"]
+frame = 8
+
+[node name="PD1" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 7.5)
+
+[node name="Sprite3D" parent="Pieces/PD1/BodyPivot/Body" index="0"]
+frame = 9
+
+[node name="PE1" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 7.5)
+
+[node name="Sprite3D" parent="Pieces/PE1/BodyPivot/Body" index="0"]
+frame = 10
+
+[node name="PF1" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 7.5)
+
+[node name="Sprite3D" parent="Pieces/PF1/BodyPivot/Body" index="0"]
+frame = 8
+
+[node name="PG1" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 7.5)
+
+[node name="Sprite3D" parent="Pieces/PG1/BodyPivot/Body" index="0"]
+frame = 7
+
+[node name="PH1" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 7.5)
+
+[node name="PA2" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 6.5)
+
+[node name="Sprite3D" parent="Pieces/PA2/BodyPivot/Body" index="0"]
+frame = 11
+
+[node name="PB2" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 6.5)
+
+[node name="Sprite3D" parent="Pieces/PB2/BodyPivot/Body" index="0"]
+frame = 11
+
+[node name="PC2" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 6.5)
+
+[node name="Sprite3D" parent="Pieces/PC2/BodyPivot/Body" index="0"]
+frame = 11
+
+[node name="PD2" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 6.5)
+
+[node name="Sprite3D" parent="Pieces/PD2/BodyPivot/Body" index="0"]
+frame = 11
+
+[node name="PE2" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 6.5)
+
+[node name="Sprite3D" parent="Pieces/PE2/BodyPivot/Body" index="0"]
+frame = 11
+
+[node name="PF2" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 6.5)
+
+[node name="Sprite3D" parent="Pieces/PF2/BodyPivot/Body" index="0"]
+frame = 11
+
+[node name="PG2" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 6.5)
+
+[node name="Sprite3D" parent="Pieces/PG2/BodyPivot/Body" index="0"]
+frame = 11
+
+[node name="PH2" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 6.5)
+
+[node name="Sprite3D" parent="Pieces/PH2/BodyPivot/Body" index="0"]
+frame = 11
+
+[node name="PA7" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.5)
+
+[node name="WhiteBase" parent="Pieces/PA7" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PA7" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PA7/BodyPivot/Body" index="0"]
+frame = 5
+
+[node name="PB7" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1.5)
+
+[node name="WhiteBase" parent="Pieces/PB7" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PB7" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PB7/BodyPivot/Body" index="0"]
+frame = 5
+
+[node name="PC7" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 1.5)
+
+[node name="WhiteBase" parent="Pieces/PC7" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PC7" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PC7/BodyPivot/Body" index="0"]
+frame = 5
+
+[node name="PD7" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 1.5)
+
+[node name="WhiteBase" parent="Pieces/PD7" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PD7" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PD7/BodyPivot/Body" index="0"]
+frame = 5
+
+[node name="PE7" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 1.5)
+
+[node name="WhiteBase" parent="Pieces/PE7" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PE7" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PE7/BodyPivot/Body" index="0"]
+frame = 5
+
+[node name="PF7" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 1.5)
+
+[node name="WhiteBase" parent="Pieces/PF7" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PF7" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PF7/BodyPivot/Body" index="0"]
+frame = 5
+
+[node name="PG7" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 1.5)
+
+[node name="WhiteBase" parent="Pieces/PG7" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PG7" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PG7/BodyPivot/Body" index="0"]
+frame = 5
+
+[node name="PH7" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 1.5)
+
+[node name="WhiteBase" parent="Pieces/PH7" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PH7" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PH7/BodyPivot/Body" index="0"]
+frame = 5
+
+[node name="PA8" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+
+[node name="WhiteBase" parent="Pieces/PA8" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PA8" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PA8/BodyPivot/Body" index="0"]
+frame = 0
+
+[node name="PB8" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0.5)
+
+[node name="WhiteBase" parent="Pieces/PB8" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PB8" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PB8/BodyPivot/Body" index="0"]
+frame = 1
+
+[node name="PC8" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0.5)
+
+[node name="WhiteBase" parent="Pieces/PC8" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PC8" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PC8/BodyPivot/Body" index="0"]
+frame = 2
+
+[node name="PD8" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 0.5)
+
+[node name="WhiteBase" parent="Pieces/PD8" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PD8" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PD8/BodyPivot/Body" index="0"]
+frame = 3
+
+[node name="PE8" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0.5)
+
+[node name="WhiteBase" parent="Pieces/PE8" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PE8" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PE8/BodyPivot/Body" index="0"]
+frame = 4
+
+[node name="PF8" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 0.5)
+
+[node name="WhiteBase" parent="Pieces/PF8" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PF8" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PF8/BodyPivot/Body" index="0"]
+frame = 2
+
+[node name="PG8" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 0.5)
+
+[node name="WhiteBase" parent="Pieces/PG8" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PG8" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PG8/BodyPivot/Body" index="0"]
+frame = 1
+
+[node name="PH8" parent="Pieces" instance=ExtResource("2_2o63q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 0.5)
+
+[node name="WhiteBase" parent="Pieces/PH8" index="1"]
+visible = false
+
+[node name="BlackBase" parent="Pieces/PH8" index="2"]
+visible = true
+
+[node name="Sprite3D" parent="Pieces/PH8/BodyPivot/Body" index="0"]
+frame = 0
+
+[node name="Ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Ui"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3ony2")
+
+[node name="ResetButton" type="Button" parent="Ui"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 18.0
+offset_right = -22.0
+offset_bottom = 59.0
+grow_horizontal = 0
+
+[editable path="Cells/A1"]
+[editable path="Cells/B1"]
+[editable path="Cells/C1"]
+[editable path="Cells/D1"]
+[editable path="Cells/E1"]
+[editable path="Cells/F1"]
+[editable path="Cells/G1"]
+[editable path="Cells/H1"]
+[editable path="Cells/A2"]
+[editable path="Cells/B2"]
+[editable path="Cells/C2"]
+[editable path="Cells/D2"]
+[editable path="Cells/E2"]
+[editable path="Cells/F2"]
+[editable path="Cells/G2"]
+[editable path="Cells/H2"]
+[editable path="Cells/A3"]
+[editable path="Cells/B3"]
+[editable path="Cells/C3"]
+[editable path="Cells/D3"]
+[editable path="Cells/E3"]
+[editable path="Cells/F3"]
+[editable path="Cells/G3"]
+[editable path="Cells/H3"]
+[editable path="Cells/A4"]
+[editable path="Cells/B4"]
+[editable path="Cells/C4"]
+[editable path="Cells/D4"]
+[editable path="Cells/E4"]
+[editable path="Cells/F4"]
+[editable path="Cells/G4"]
+[editable path="Cells/H4"]
+[editable path="Cells/A5"]
+[editable path="Cells/B5"]
+[editable path="Cells/C5"]
+[editable path="Cells/D5"]
+[editable path="Cells/E5"]
+[editable path="Cells/F5"]
+[editable path="Cells/G5"]
+[editable path="Cells/H5"]
+[editable path="Cells/A6"]
+[editable path="Cells/B6"]
+[editable path="Cells/C6"]
+[editable path="Cells/D6"]
+[editable path="Cells/E6"]
+[editable path="Cells/F6"]
+[editable path="Cells/G6"]
+[editable path="Cells/H6"]
+[editable path="Cells/A7"]
+[editable path="Cells/B7"]
+[editable path="Cells/C7"]
+[editable path="Cells/D7"]
+[editable path="Cells/E7"]
+[editable path="Cells/F7"]
+[editable path="Cells/G7"]
+[editable path="Cells/H7"]
+[editable path="Cells/A8"]
+[editable path="Cells/B8"]
+[editable path="Cells/C8"]
+[editable path="Cells/D8"]
+[editable path="Cells/E8"]
+[editable path="Cells/F8"]
+[editable path="Cells/G8"]
+[editable path="Cells/H8"]
+[editable path="Pieces/PA1"]
+[editable path="Pieces/PB1"]
+[editable path="Pieces/PC1"]
+[editable path="Pieces/PD1"]
+[editable path="Pieces/PE1"]
+[editable path="Pieces/PF1"]
+[editable path="Pieces/PG1"]
+[editable path="Pieces/PH1"]
+[editable path="Pieces/PA2"]
+[editable path="Pieces/PB2"]
+[editable path="Pieces/PC2"]
+[editable path="Pieces/PD2"]
+[editable path="Pieces/PE2"]
+[editable path="Pieces/PF2"]
+[editable path="Pieces/PG2"]
+[editable path="Pieces/PH2"]
+[editable path="Pieces/PA7"]
+[editable path="Pieces/PB7"]
+[editable path="Pieces/PC7"]
+[editable path="Pieces/PD7"]
+[editable path="Pieces/PE7"]
+[editable path="Pieces/PF7"]
+[editable path="Pieces/PG7"]
+[editable path="Pieces/PH7"]
+[editable path="Pieces/PA8"]
+[editable path="Pieces/PB8"]
+[editable path="Pieces/PC8"]
+[editable path="Pieces/PD8"]
+[editable path="Pieces/PE8"]
+[editable path="Pieces/PF8"]
+[editable path="Pieces/PG8"]
+[editable path="Pieces/PH8"]
