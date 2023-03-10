@@ -17,6 +17,8 @@ var white_pieces := []
 var black_pieces := []
 var white_king
 var black_king
+var is_promotion := false
+var promoting_piece :Piece = null
 var is_end_game := false
 
 
@@ -50,6 +52,10 @@ func _ready():
 	%SwitchButton.pressed.connect(switch_color)
 	%ReadyButton.pressed.connect(ready)
 	%RetryButton.pressed.connect(reset_game)
+	%TowerButton.pressed.connect(promotion.bind(Piece.PieceType.TOWER))
+	%HorseButton.pressed.connect(promotion.bind(Piece.PieceType.KNIGHT))
+	%BishopButton.pressed.connect(promotion.bind(Piece.PieceType.BISHOP))
+	%QueenButton.pressed.connect(promotion.bind(Piece.PieceType.QUEEN))
 
 
 func _physics_process(delta):
@@ -110,7 +116,10 @@ func end_move():
 		mouse_cell.piece = mouse_piece
 		mouse_piece.is_first_move = false
 		update_in_sight()
-		new_turn()
+		if is_promotion:
+			%Promotion.visible = true
+		else:
+			new_turn()
 		%Camera/Camera3D/AudioStreamPlayer3D.play()
 	else:
 		mouse_piece.position = previous_position
@@ -157,6 +166,8 @@ func king_cases(old_position, progress, destiny_piece, preview):
 				return false
 			if not get_cell(Vector3i(7, 0, 7)).piece:
 				return false
+			if not get_cell(Vector3i(7, 0, 7)).piece.is_first_move:
+				return false
 			if not preview:
 				var tower = get_cell(Vector3i(7, 0, 7)).piece
 				tower.position = Vector3(5.5, 0, 7.5)
@@ -174,6 +185,8 @@ func king_cases(old_position, progress, destiny_piece, preview):
 				return false
 			if not get_cell(Vector3i(0, 0, 7)).piece:
 				return false
+			if not get_cell(Vector3i(0, 0, 7)).piece.is_first_move:
+				return false
 			if not preview:
 				var tower = get_cell(Vector3i(0, 0, 7)).piece
 				tower.position = Vector3(3.5, 0, 7.5)
@@ -189,6 +202,8 @@ func king_cases(old_position, progress, destiny_piece, preview):
 			if get_cell(Vector3i(6, 0, 0)).piece:
 				return false
 			if not get_cell(Vector3i(7, 0, 0)).piece:
+				return false
+			if not get_cell(Vector3i(7, 0, 0)).piece.is_first_move:
 				return false
 			if not preview:
 				var tower = get_cell(Vector3i(7, 0, 0)).piece
@@ -206,6 +221,8 @@ func king_cases(old_position, progress, destiny_piece, preview):
 			if get_cell(Vector3i(1, 0, 0)).piece:
 				return false
 			if not get_cell(Vector3i(0, 0, 0)).piece:
+				return false
+			if not get_cell(Vector3i(0, 0, 0)).piece.is_first_move:
 				return false
 			if not preview:
 				var tower = get_cell(Vector3i(0, 0, 0)).piece
@@ -235,21 +252,47 @@ func pawn_cases(old_position, progress, destiny_piece, preview):
 		if old_position + progress in [
 				Vector3i(0, 0, 0), Vector3i(1, 0, 0), Vector3i(2, 0, 0), Vector3i(3, 0, 0), 
 				Vector3i(4, 0, 0), Vector3i(5, 0, 0), Vector3i(6, 0, 0), Vector3i(7, 0, 0)]:
-			mouse_piece.type = Piece.PieceType.QUEEN
-			mouse_piece.body.frame = 9
-			mouse_piece.get_lines_by_type(mouse_piece.type)
-			update_in_sight()
+			is_promotion = true
+			promoting_piece = mouse_piece
+			
 	else:
 		if old_position + progress in [
 				Vector3i(0, 0, 7), Vector3i(1, 0, 7), Vector3i(2, 0, 7), Vector3i(3, 0, 7), 
 				Vector3i(4, 0, 7), Vector3i(5, 0, 7), Vector3i(6, 0, 7), Vector3i(7, 0, 7)]:
-			mouse_piece.type = Piece.PieceType.QUEEN
-			mouse_piece.body.frame = 3
-			mouse_piece.get_lines_by_type(mouse_piece.type)
-			update_in_sight()
+			is_promotion = true
+			promoting_piece = mouse_piece
 	
 	return true
 	
+
+func promotion(piece_type):
+	promoting_piece.type = piece_type
+	promoting_piece.get_lines_by_type(promoting_piece.type)
+	
+	if is_white_turn:
+		if piece_type == Piece.PieceType.QUEEN:
+			promoting_piece.body.frame = 9
+		elif piece_type == Piece.PieceType.BISHOP:
+			promoting_piece.body.frame = 8
+		elif piece_type == Piece.PieceType.KNIGHT:
+			promoting_piece.body.frame = 7
+		elif piece_type == Piece.PieceType.TOWER:
+			promoting_piece.body.frame = 6
+	else:
+		if piece_type == Piece.PieceType.QUEEN:
+			promoting_piece.body.frame = 3
+		elif piece_type == Piece.PieceType.BISHOP:
+			promoting_piece.body.frame = 2
+		elif piece_type == Piece.PieceType.KNIGHT:
+			promoting_piece.body.frame = 1
+		elif piece_type == Piece.PieceType.TOWER:
+			promoting_piece.body.frame = 0
+			
+	is_promotion = false
+	promoting_piece = null
+	%Promotion.visible = false
+	new_turn()
+
 
 func pawn_move(old_position, progress, destiny_piece, preview):
 	if mouse_piece.color == Piece.PieceColor.WHITE:
@@ -261,6 +304,8 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 					and get_cell(old_position + Vector3i(-1, 0, 0)).piece == \
 					mouse_piece.piece_capturable_en_passant:
 				capture_piece(mouse_piece.piece_capturable_en_passant, preview)
+				if not preview:
+					mouse_piece.piece_capturable_en_passant = null
 				return true
 			else:
 				return false
@@ -272,24 +317,26 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 					and get_cell(old_position + Vector3i(1, 0, 0)).piece == \
 					mouse_piece.piece_capturable_en_passant:
 				capture_piece(mouse_piece.piece_capturable_en_passant, preview)
+				if not preview:
+					mouse_piece.piece_capturable_en_passant = null
 				return true
 			else:
 				return false
 		elif progress == Vector3i(0, 0, -2) and mouse_piece.is_first_move:
-			return true
-		elif progress == Vector3i(0, 0, -1):
-			if destiny_piece:
-				return false
-			var left_cell = get_cell(old_position + Vector3i(-1, 0, -1))
+			var left_cell = get_cell(old_position + Vector3i(-1, 0, -2))
 			if left_cell and left_cell.piece \
 					and left_cell.piece.color == Piece.PieceColor.BLACK \
 					and left_cell.piece.type == Piece.PieceType.PAWN:
 				left_cell.piece.piece_capturable_en_passant = mouse_piece
-			var right_cell = get_cell(old_position + Vector3i(1, 0, -1))
+			var right_cell = get_cell(old_position + Vector3i(1, 0, -2))
 			if right_cell and right_cell.piece \
 					and right_cell.piece.color == Piece.PieceColor.BLACK \
 					and right_cell.piece.type == Piece.PieceType.PAWN:
 				right_cell.piece.piece_capturable_en_passant = mouse_piece
+			return true
+		elif progress == Vector3i(0, 0, -1):
+			if destiny_piece:
+				return false
 			return true
 		else:
 			return false
@@ -303,6 +350,8 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 					and get_cell(old_position + Vector3i(-1, 0, 0)).piece == \
 					mouse_piece.piece_capturable_en_passant:
 				capture_piece(mouse_piece.piece_capturable_en_passant, preview)
+				if not preview:
+					mouse_piece.piece_capturable_en_passant = null
 				return true
 			else:
 				return false
@@ -314,24 +363,26 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 					and get_cell(old_position + Vector3i(1, 0, 0)).piece == \
 					mouse_piece.piece_capturable_en_passant:
 				capture_piece(mouse_piece.piece_capturable_en_passant, preview)
+				if not preview:
+					mouse_piece.piece_capturable_en_passant = null
 				return true
 			else:
 				return false
 		elif progress == Vector3i(0, 0, 2) and mouse_piece.is_first_move:
-			return true
-		elif progress == Vector3i(0, 0, 1):
-			if destiny_piece:
-				return false
-			var left_cell = get_cell(old_position + Vector3i(-1, 0, 1))
+			var left_cell = get_cell(old_position + Vector3i(-1, 0, 2))
 			if left_cell and left_cell.piece \
 					and left_cell.piece.color == Piece.PieceColor.WHITE \
 					and left_cell.piece.type == Piece.PieceType.PAWN:
 				left_cell.piece.piece_capturable_en_passant = mouse_piece
-			var right_cell = get_cell(old_position + Vector3i(1, 0, 1))
+			var right_cell = get_cell(old_position + Vector3i(1, 0, 2))
 			if right_cell and right_cell.piece \
 					and right_cell.piece.color == Piece.PieceColor.WHITE \
 					and right_cell.piece.type == Piece.PieceType.PAWN:
 				right_cell.piece.piece_capturable_en_passant = mouse_piece
+			return true
+		elif progress == Vector3i(0, 0, 1):
+			if destiny_piece:
+				return false
 			return true
 		else:
 			return false

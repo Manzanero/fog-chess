@@ -13,7 +13,7 @@ config_version=5
 config/name="fog-chess"
 run/main_scene="res://assets/board/board.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [display]
 

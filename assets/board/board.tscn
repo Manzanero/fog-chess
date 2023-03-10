@@ -1,4 +1,4 @@
-[gd_scene load_steps=311 format=3 uid="uid://di1bywnlgxpbo"]
+[gd_scene load_steps=312 format=3 uid="uid://di1bywnlgxpbo"]
 
 [ext_resource type="Script" path="res://assets/board/camera.gd" id="1_873hq"]
 [ext_resource type="Script" path="res://assets/board/board.gd" id="1_kuwnu"]
@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://c34f5x0qvvp23" path="res://resources/fonts/PressStart2P-Regular.ttf" id="5_420hn"]
 [ext_resource type="FontFile" uid="uid://mc22mqilkmtc" path="res://resources/fonts/Hardpixel.OTF" id="5_ka1pj"]
 [ext_resource type="Texture2D" uid="uid://dydpdaa6kwthc" path="res://assets/board/black_cell_0.png" id="5_xmlxk"]
+[ext_resource type="Texture2D" uid="uid://b2eprf13on8q7" path="res://assets/pieces/pieces.png" id="10_iemm3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_65ikk"]
 ground_bottom_color = Color(0, 0, 0, 1)
@@ -5168,6 +5169,105 @@ text = "Retry"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="Promotion" type="Panel" parent="Ui"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0skdq")
+
+[node name="TowerButton" type="Button" parent="Ui/Promotion"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -275.0
+offset_top = 561.0
+offset_right = -164.0
+offset_bottom = 668.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_kb8he")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ui/Promotion/TowerButton"]
+texture_filter = 1
+position = Vector2(55, 53)
+scale = Vector2(5, 5)
+texture = ExtResource("10_iemm3")
+hframes = 6
+vframes = 2
+frame = 6
+
+[node name="HorseButton" type="Button" parent="Ui/Promotion"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 561.0
+offset_right = -19.0
+offset_bottom = 668.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_kb8he")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ui/Promotion/HorseButton"]
+texture_filter = 1
+position = Vector2(55, 53)
+scale = Vector2(5, 5)
+texture = ExtResource("10_iemm3")
+hframes = 6
+vframes = 2
+frame = 7
+
+[node name="BishopButton" type="Button" parent="Ui/Promotion"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 15.0
+offset_top = 561.0
+offset_right = 126.0
+offset_bottom = 668.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_kb8he")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ui/Promotion/BishopButton"]
+texture_filter = 1
+position = Vector2(55, 53)
+scale = Vector2(5, 5)
+texture = ExtResource("10_iemm3")
+hframes = 6
+vframes = 2
+frame = 8
+
+[node name="QueenButton" type="Button" parent="Ui/Promotion"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 163.0
+offset_top = 561.0
+offset_right = 274.0
+offset_bottom = 668.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_kb8he")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ui/Promotion/QueenButton"]
+texture_filter = 1
+position = Vector2(55, 53)
+scale = Vector2(5, 5)
+texture = ExtResource("10_iemm3")
+hframes = 6
+vframes = 2
+frame = 9
 
 [node name="Cover" type="Panel" parent="Ui"]
 unique_name_in_owner = true
