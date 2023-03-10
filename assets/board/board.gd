@@ -423,6 +423,10 @@ func new_turn():
 	%Cover.visible = true
 	switch_color()
 
+	var pieces = black_pieces if player_is_white else white_pieces
+	for piece in pieces:
+		piece.piece_capturable_en_passant = null
+		
 
 func ready():
 	%Cover.visible = false
