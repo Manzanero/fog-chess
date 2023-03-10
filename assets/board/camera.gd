@@ -18,26 +18,35 @@ signal rotation_changed
 var is_rotate: bool
 var offset_move: Vector2
 
+var ray := PhysicsRayQueryParameters3D.new()
+var ray_length := 1000
 
-@onready var camera = $Camera3D
-@onready var reset_button := %ResetButton as Button
+@onready var camera := $Camera3D as Camera3D
+@onready var reset_white_button := %ResetWhiteButton as Button
+@onready var reset_black_button := %ResetBlackButton as Button
 
 
 func _ready():
-	reset_button.pressed.connect(reset)
+	reset_white_button.pressed.connect(reset.bind(true))
+	reset_black_button.pressed.connect(reset.bind(false))
 	
-	reset()
+	reset(true)
 	
 	
-func reset():
+func reset(is_white):
 	rotation.x = deg_to_rad(init_rot_x)
 	rotation.y = deg_to_rad(init_rot_y)
 	camera.transform.origin.z = init_zoom
 	
+	if not is_white:
+		rotation.y = deg_to_rad(init_rot_y + 180)
+	
+	ray.collision_mask = 1
+
 	emit_signal("rotation_changed")
 
 
-func _process(delta):
+func _process(_delta):
 	is_rotate = Input.is_action_pressed("right_click")
 
 	if is_rotate:

@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://assets/pieces/piece.gd" id="1_gavxk"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_5vvd1"]
+resource_local_to_scene = true
 height = 0.063
 radius = 0.438
 
@@ -13,7 +14,9 @@ albedo_color = Color(1, 1, 1, 0.764706)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_n5x12"]
 material = SubResource("StandardMaterial3D_ikfu2")
-height = 0.125
+top_radius = 0.438
+bottom_radius = 0.438
+height = 0.063
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6l3a"]
 transparency = 1
@@ -21,12 +24,18 @@ albedo_color = Color(0, 0, 0, 0.490196)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_78onb"]
 material = SubResource("StandardMaterial3D_t6l3a")
-height = 0.125
+top_radius = 0.438
+bottom_radius = 0.438
+height = 0.063
 
 [node name="Piece" type="Node3D"]
 script = ExtResource("1_gavxk")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.032, 0)
+collision_layer = 2
+collision_mask = 0
+input_capture_on_drag = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.031, 0)
@@ -35,7 +44,7 @@ shape = SubResource("CylinderShape3D_5vvd1")
 [node name="WhiteBase" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="WhiteBase"]
-transform = Transform3D(0.875, 0, 0, 0, 0.5, 0, 0, 0, 0.875, 0, 0.032, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.032, 0)
 mesh = SubResource("CylinderMesh_n5x12")
 skeleton = NodePath("../..")
 
@@ -43,7 +52,7 @@ skeleton = NodePath("../..")
 visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="BlackBase"]
-transform = Transform3D(0.875, 0, 0, 0, 0.5, 0, 0, 0, 0.875, 0, 0.032, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.032, 0)
 mesh = SubResource("CylinderMesh_78onb")
 skeleton = NodePath("../..")
 
