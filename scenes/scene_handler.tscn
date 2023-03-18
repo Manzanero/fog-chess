@@ -1,0 +1,249 @@
+[gd_scene load_steps=8 format=3 uid="uid://bpju5qw02tol2"]
+
+[ext_resource type="Script" path="res://scenes/scene_handler.gd" id="1_skg8c"]
+[ext_resource type="FontFile" uid="uid://mc22mqilkmtc" path="res://resources/fonts/Hardpixel.OTF" id="2_m1om4"]
+[ext_resource type="Texture2D" uid="uid://bw57fmjfeqhnd" path="res://icon.png" id="3_lodpf"]
+[ext_resource type="FontFile" uid="uid://c34f5x0qvvp23" path="res://resources/fonts/PressStart2P-Regular.ttf" id="3_yqi2w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kueod"]
+border_width_bottom = 3
+border_color = Color(0.321569, 0.321569, 0.321569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vkp7o"]
+bg_color = Color(0.168627, 0.333333, 0.247059, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0.168627, 0.333333, 0.247059, 0.486275)
+shadow_size = 5
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ia02k"]
+bg_color = Color(0.662745, 0.0588235, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.411765, 0.0196078, 0, 1)
+shadow_size = 5
+shadow_offset = Vector2(0, 5)
+
+[node name="SceneHandler" type="Node"]
+script = ExtResource("1_skg8c")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kueod")
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 60.0
+offset_top = 23.0
+offset_right = 195.0
+offset_bottom = 59.0
+theme_override_colors/font_color = Color(0.14902, 0.337255, 0.223529, 0.862745)
+theme_override_fonts/font = ExtResource("2_m1om4")
+theme_override_font_sizes/font_size = 27
+text = "Fog Chess"
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.23
+anchor_right = 0.5
+anchor_bottom = 0.23
+offset_left = -18.0
+offset_top = -19.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Icon" type="Sprite2D" parent="CanvasLayer/Control"]
+texture_filter = 3
+position = Vector2(35, 16)
+scale = Vector2(4.375, 4.375)
+texture = ExtResource("3_lodpf")
+
+[node name="MainMenu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 140.0
+offset_top = 194.0
+offset_right = -117.0
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vkp7o")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -249.5
+offset_top = -158.5
+offset_right = 250.5
+offset_bottom = 168.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 38
+
+[node name="LocalGameButton" type="Button" parent="CanvasLayer/MainMenu/Panel/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(227.493, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_ia02k")
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/Panel/HBoxContainer/LocalGameButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.689
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("3_yqi2w")
+text = "Local Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/MainMenu/Panel/HBoxContainer/LocalGameButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 264.0
+offset_top = 8.0
+offset_right = 261.311
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.0862745, 0.172549, 0.121569, 1)
+theme_override_fonts/font = ExtResource("3_yqi2w")
+text = "Both players share the same monitor"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="HostGameButton" type="Button" parent="CanvasLayer/MainMenu/Panel/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(227.493, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_ia02k")
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/Panel/HBoxContainer/HostGameButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.689
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("3_yqi2w")
+text = "Host a Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/MainMenu/Panel/HBoxContainer/HostGameButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 264.0
+offset_top = 8.0
+offset_right = 261.311
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.0862745, 0.172549, 0.121569, 1)
+theme_override_fonts/font = ExtResource("3_yqi2w")
+text = "Start an online game as white side"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="JoinGameButton" type="Button" parent="CanvasLayer/MainMenu/Panel/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(227.493, 80)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_ia02k")
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/Panel/HBoxContainer/JoinGameButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.689
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("3_yqi2w")
+text = "Join a Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/MainMenu/Panel/HBoxContainer/JoinGameButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 264.0
+offset_top = 8.0
+offset_right = 261.311
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.0862745, 0.172549, 0.121569, 1)
+theme_override_fonts/font = ExtResource("3_yqi2w")
+text = "Join an online game as black side"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="CurrentScene" type="Node" parent="."]

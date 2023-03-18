@@ -11,14 +11,18 @@ config_version=5
 [application]
 
 config/name="fog-chess"
-run/main_scene="res://assets/board/board.tscn"
+run/main_scene="res://scenes/scene_handler.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 config/icon="res://icon.png"
 
+[autoload]
+
+Data="*res://autoloads/data/data.gd"
+
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=800
+window/size/viewport_width=800
+window/size/viewport_height=600
 window/size/initial_position_type=2
 window/size/initial_screen=1
 window/stretch/mode="canvas_items"

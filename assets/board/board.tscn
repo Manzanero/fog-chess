@@ -1,4 +1,4 @@
-[gd_scene load_steps=312 format=3 uid="uid://di1bywnlgxpbo"]
+[gd_scene load_steps=313 format=3 uid="uid://di1bywnlgxpbo"]
 
 [ext_resource type="Script" path="res://assets/board/camera.gd" id="1_873hq"]
 [ext_resource type="Script" path="res://assets/board/board.gd" id="1_kuwnu"]
@@ -3619,6 +3619,11 @@ shadow_color = Color(0.592157, 0, 0, 0.6)
 shadow_size = 8
 shadow_offset = Vector2(0, 5)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayt8c"]
+bg_color = Color(0, 0, 0, 0.294118)
+border_width_bottom = 3
+border_color = Color(0.321569, 0.321569, 0.321569, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p51ep"]
 bg_color = Color(0, 0, 0, 1)
 border_width_bottom = 3
@@ -3655,8 +3660,7 @@ light_energy = 0.25
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(6.25, 0, 0, 0, -2.73196e-07, 6.25, 0, -6.25, -2.73196e-07, -1, -0.25, 9)
 centered = false
-modulate = Color(0.243137, 0.243137, 0.243137, 1)
-double_sided = false
+modulate = Color(0.321569, 0.321569, 0.321569, 1)
 alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("2_vy82i")
@@ -5187,10 +5191,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -275.0
-offset_top = 561.0
-offset_right = -164.0
-offset_bottom = 668.0
+offset_left = -260.0
+offset_top = 430.0
+offset_right = -149.0
+offset_bottom = 537.0
 grow_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_kb8he")
 
@@ -5209,10 +5213,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -130.0
-offset_top = 561.0
-offset_right = -19.0
-offset_bottom = 668.0
+offset_left = -115.0
+offset_top = 430.0
+offset_right = -4.0
+offset_bottom = 537.0
 grow_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_kb8he")
 
@@ -5231,10 +5235,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 15.0
-offset_top = 561.0
-offset_right = 126.0
-offset_bottom = 668.0
+offset_left = 30.0
+offset_top = 430.0
+offset_right = 141.0
+offset_bottom = 537.0
 grow_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_kb8he")
 
@@ -5253,10 +5257,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 163.0
-offset_top = 561.0
-offset_right = 274.0
-offset_bottom = 668.0
+offset_left = 178.0
+offset_top = 430.0
+offset_right = 289.0
+offset_bottom = 537.0
 grow_horizontal = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_kb8he")
 
@@ -5268,6 +5272,33 @@ texture = ExtResource("10_iemm3")
 hframes = 6
 vframes = 2
 frame = 9
+
+[node name="Waiting" type="Panel" parent="Ui"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ayt8c")
+
+[node name="Label" type="Label" parent="Ui/Waiting"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 302.0
+offset_top = 362.0
+offset_right = -274.0
+offset_bottom = 410.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_420hn")
+theme_override_font_sizes/font_size = 32
+text = "Wait..."
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [node name="Cover" type="Panel" parent="Ui"]
 unique_name_in_owner = true
@@ -5319,9 +5350,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_3ony2")
 
 [node name="Label" type="Label" parent="Ui"]
 layout_mode = 0
-offset_left = 73.0
+offset_left = 60.0
 offset_top = 23.0
-offset_right = 208.0
+offset_right = 195.0
 offset_bottom = 59.0
 theme_override_colors/font_color = Color(0.14902, 0.337255, 0.223529, 0.862745)
 theme_override_fonts/font = ExtResource("5_ka1pj")
@@ -5374,9 +5405,9 @@ unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 475.0
+offset_left = 238.0
 offset_top = 29.0
-offset_right = -485.0
+offset_right = -242.0
 offset_bottom = 77.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("5_420hn")
@@ -5392,9 +5423,9 @@ visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 475.0
+offset_left = 238.0
 offset_top = 29.0
-offset_right = -485.0
+offset_right = -242.0
 offset_bottom = 77.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)

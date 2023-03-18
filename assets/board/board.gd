@@ -5,7 +5,6 @@ signal vision_changed
 var mouse_position := Vector3.ZERO
 var mouse_cell: Cell = null
 
-var player_is_white := true
 var is_white_turn := true
 var move_mode := false
 var mouse_piece :Piece = null
@@ -45,6 +44,11 @@ func _ready():
 			black_pieces.append(piece)
 			if piece.type == Piece.PieceType.KING:
 				black_king = piece
+	
+	print(Data.is_host)
+	if not Data.is_host:
+		new_turn()
+		switch_color()
 
 	vision_changed.connect(update_in_sight)
 	update_in_sight()
@@ -323,6 +327,8 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 			else:
 				return false
 		elif progress == Vector3i(0, 0, -2) and mouse_piece.is_first_move:
+			if destiny_piece:
+				return false
 			var left_cell = get_cell(old_position + Vector3i(-1, 0, -2))
 			if left_cell and left_cell.piece \
 					and left_cell.piece.color == Piece.PieceColor.BLACK \
@@ -369,6 +375,8 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 			else:
 				return false
 		elif progress == Vector3i(0, 0, 2) and mouse_piece.is_first_move:
+			if destiny_piece:
+				return false
 			var left_cell = get_cell(old_position + Vector3i(-1, 0, 2))
 			if left_cell and left_cell.piece \
 					and left_cell.piece.color == Piece.PieceColor.WHITE \
@@ -420,10 +428,14 @@ func new_turn():
 	is_white_turn = not is_white_turn
 	%WhiteTurn.visible = is_white_turn
 	%BlackTurn.visible = not is_white_turn
-	%Cover.visible = true
-	switch_color()
+		
+	if Data.is_online:
+		%Waiting.visible = true
+	else:
+		%Cover.visible = true
+		switch_color()
 
-	var pieces = black_pieces if player_is_white else white_pieces
+	var pieces = black_pieces if is_white_turn else white_pieces
 	for piece in pieces:
 		piece.piece_capturable_en_passant = null
 		
@@ -440,7 +452,7 @@ func update_in_sight():
 		var cell: Cell = cells[k]
 		cell.in_sight = false
 
-	var pieces = white_pieces if player_is_white else black_pieces
+	var pieces = white_pieces if is_white_turn else black_pieces
 	for piece in pieces:
 		var piece_cell = get_cell(Vector3i(piece.position))
 		piece_cell.in_sight = true
@@ -472,9 +484,8 @@ func update_in_sight():
 
 
 func switch_color():
-	player_is_white = not player_is_white
 	update_in_sight()
-	camera.reset(player_is_white)
+	camera.reset(is_white_turn)
 	
 
 func reset_game():
