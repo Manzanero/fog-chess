@@ -5,6 +5,7 @@ signal vision_changed
 var mouse_position := Vector3.ZERO
 var mouse_cell: Cell = null
 
+var player_is_white := true
 var is_white_turn := true
 var move_mode := false
 var mouse_piece :Piece = null
@@ -16,7 +17,9 @@ var white_pieces := []
 var black_pieces := []
 var white_king
 var black_king
-var is_promotion := false
+var en_passant_who = null
+var en_passant_whom = null
+var is_promotion = false
 var promoting_piece :Piece = null
 var is_end_game := false
 
@@ -45,10 +48,19 @@ func _ready():
 			if piece.type == Piece.PieceType.KING:
 				black_king = piece
 	
-	print(Data.is_host)
 	if not Data.is_host:
-		new_turn()
-		switch_color()
+		player_is_white = false
+		%WhiteTurn.visible = is_white_turn
+		%BlackTurn.visible = not is_white_turn
+		camera.reset(player_is_white if Data.is_online else is_white_turn)
+		Server.send_join()
+		
+	if Data.is_online:
+		%Waiting.visible = true
+		$Ui/MatchCode.text = Data.world_name.right(4)
+	else:
+		$Ui/MatchLabel.visible = false
+		$Ui/MatchCode.visible = false
 
 	vision_changed.connect(update_in_sight)
 	update_in_sight()
@@ -60,6 +72,16 @@ func _ready():
 	%HorseButton.pressed.connect(promotion.bind(Piece.PieceType.KNIGHT))
 	%BishopButton.pressed.connect(promotion.bind(Piece.PieceType.BISHOP))
 	%QueenButton.pressed.connect(promotion.bind(Piece.PieceType.QUEEN))
+	
+	Server.join.connect(join)                                                                                                                                                                                                                       
+	Server.movement.connect(movement)
+	Server.next_turn.connect(new_turn)
+	Server.en_passant.connect(en_passant)
+	Server.promote.connect(promote)
+
+
+func join():
+	%Waiting.visible = false
 
 
 func _physics_process(delta):
@@ -125,6 +147,14 @@ func end_move():
 		else:
 			new_turn()
 		%Camera/Camera3D/AudioStreamPlayer3D.play()
+		
+		Server.send_movement_async(previous_position, mouse_piece.position)
+		if en_passant_who:
+			Server.send_en_passant(en_passant_who, en_passant_whom)
+			en_passant_who = null
+			en_passant_whom = null
+		if not is_promotion:
+			Server.send_next_turn_async()
 	else:
 		mouse_piece.position = previous_position
 		
@@ -159,7 +189,7 @@ func is_valid_move(new_position, preview):
 	return false
 	
 
-func king_cases(old_position, progress, destiny_piece, preview):
+func king_cases(_old_position, progress, destiny_piece, preview):
 	if mouse_piece.color == Piece.PieceColor.WHITE:
 		if progress == Vector3i(2, 0, 0):
 			if not mouse_piece.is_first_move:
@@ -177,6 +207,7 @@ func king_cases(old_position, progress, destiny_piece, preview):
 				tower.position = Vector3(5.5, 0, 7.5)
 				get_cell(Vector3i(5, 0, 7)).piece = tower
 				get_cell(Vector3i(7, 0, 7)).piece = null
+				Server.send_movement_async(Vector3i(7, 0, 7), Vector3i(5, 0, 7))
 			return true
 		if progress == Vector3i(-2, 0, 0):
 			if not mouse_piece.is_first_move:
@@ -196,6 +227,7 @@ func king_cases(old_position, progress, destiny_piece, preview):
 				tower.position = Vector3(3.5, 0, 7.5)
 				get_cell(Vector3i(3, 0, 7)).piece = tower
 				get_cell(Vector3i(0, 0, 7)).piece = null
+				Server.send_movement_async(Vector3i(0, 0, 7), Vector3i(3, 0, 7))
 			return true
 	else:
 		if progress == Vector3i(2, 0, 0):
@@ -214,6 +246,7 @@ func king_cases(old_position, progress, destiny_piece, preview):
 				tower.position = Vector3(5.5, 0, 0.5)
 				get_cell(Vector3i(5, 0, 0)).piece = tower
 				get_cell(Vector3i(7, 0, 0)).piece = null
+				Server.send_movement_async(Vector3i(7, 0, 0), Vector3i(5, 0, 0))
 			return true
 		if progress == Vector3i(-2, 0, 0):
 			if not mouse_piece.is_first_move:
@@ -233,6 +266,7 @@ func king_cases(old_position, progress, destiny_piece, preview):
 				tower.position = Vector3(3.5, 0, 0.5)
 				get_cell(Vector3i(3, 0, 0)).piece = tower
 				get_cell(Vector3i(0, 0, 0)).piece = null
+				Server.send_movement_async(Vector3i(0, 0, 0), Vector3i(3, 0, 0))
 			return true
 	
 	if destiny_piece:
@@ -292,10 +326,16 @@ func promotion(piece_type):
 		elif piece_type == Piece.PieceType.TOWER:
 			promoting_piece.body.frame = 0
 			
+	Server.send_promote(Vector3i(promoting_piece.position), piece_type)
+	
 	is_promotion = false
 	promoting_piece = null
-	%Promotion.visible = false
+	
+	if not is_end_game:
+		%Promotion.visible = false
 	new_turn()
+	
+	Server.send_next_turn_async()
 
 
 func pawn_move(old_position, progress, destiny_piece, preview):
@@ -330,15 +370,19 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 			if destiny_piece:
 				return false
 			var left_cell = get_cell(old_position + Vector3i(-1, 0, -2))
-			if left_cell and left_cell.piece \
+			if left_cell and not preview and left_cell.piece \
 					and left_cell.piece.color == Piece.PieceColor.BLACK \
 					and left_cell.piece.type == Piece.PieceType.PAWN:
 				left_cell.piece.piece_capturable_en_passant = mouse_piece
+				en_passant_who = old_position + Vector3i(-1, 0, -2)
+				en_passant_whom = old_position + Vector3i(0, 0, -2)
 			var right_cell = get_cell(old_position + Vector3i(1, 0, -2))
-			if right_cell and right_cell.piece \
+			if right_cell and not preview and right_cell.piece \
 					and right_cell.piece.color == Piece.PieceColor.BLACK \
 					and right_cell.piece.type == Piece.PieceType.PAWN:
 				right_cell.piece.piece_capturable_en_passant = mouse_piece
+				en_passant_who = old_position + Vector3i(1, 0, -2)
+				en_passant_whom = old_position + Vector3i(0, 0, -2)
 			return true
 		elif progress == Vector3i(0, 0, -1):
 			if destiny_piece:
@@ -378,15 +422,19 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 			if destiny_piece:
 				return false
 			var left_cell = get_cell(old_position + Vector3i(-1, 0, 2))
-			if left_cell and left_cell.piece \
+			if left_cell and not preview and left_cell.piece \
 					and left_cell.piece.color == Piece.PieceColor.WHITE \
 					and left_cell.piece.type == Piece.PieceType.PAWN:
 				left_cell.piece.piece_capturable_en_passant = mouse_piece
+				en_passant_who = old_position + Vector3i(-1, 0, 2)
+				en_passant_whom = old_position + Vector3i(0, 0, 2)
 			var right_cell = get_cell(old_position + Vector3i(1, 0, 2))
-			if right_cell and right_cell.piece \
+			if right_cell and not preview and right_cell.piece \
 					and right_cell.piece.color == Piece.PieceColor.WHITE \
 					and right_cell.piece.type == Piece.PieceType.PAWN:
 				right_cell.piece.piece_capturable_en_passant = mouse_piece
+				en_passant_who = old_position + Vector3i(1, 0, 2)
+				en_passant_whom = old_position + Vector3i(0, 0, 2)
 			return true
 		elif progress == Vector3i(0, 0, 1):
 			if destiny_piece:
@@ -396,7 +444,7 @@ func pawn_move(old_position, progress, destiny_piece, preview):
 			return false
 	
 	
-func capture_piece(piece, preview):
+func capture_piece(piece, preview=false):
 	if preview:
 		return
 		
@@ -405,9 +453,11 @@ func capture_piece(piece, preview):
 	piece.queue_free()
 	if white_king not in white_pieces:
 		is_end_game = true
+		%Waiting.visible = false
 		win(false)
 	if black_king not in black_pieces:
 		is_end_game = true
+		%Waiting.visible = false
 		win(true)
 	
 
@@ -421,6 +471,20 @@ func verify_move():
 	return true
 
 
+func movement(old: Vector3i, new: Vector3i):
+	var origin = get_cell(old)
+	var destiny = get_cell(new)
+	
+	var piece = origin.piece
+	origin.piece = null
+	
+	if destiny.piece:
+		capture_piece(destiny.piece)
+		
+	destiny.piece = piece
+	piece.position = destiny.center
+
+
 func new_turn():
 	if is_end_game:
 		return
@@ -428,18 +492,44 @@ func new_turn():
 	is_white_turn = not is_white_turn
 	%WhiteTurn.visible = is_white_turn
 	%BlackTurn.visible = not is_white_turn
-		
-	if Data.is_online:
-		%Waiting.visible = true
-	else:
-		%Cover.visible = true
-		switch_color()
+
+	switch_color()
 
 	var pieces = black_pieces if is_white_turn else white_pieces
 	for piece in pieces:
 		piece.piece_capturable_en_passant = null
-		
 
+
+func en_passant(who: Vector3i, whom: Vector3i):
+	var origin = get_cell(who)
+	var destiny = get_cell(whom)
+	origin.piece.piece_capturable_en_passant = destiny.piece
+	
+
+func promote(who: Vector3i, piece_type: Piece.PieceType):
+	var piece = get_cell(who).piece
+	var is_white_piece = piece.color == Piece.PieceColor.WHITE
+	
+	if is_white_piece:
+		if piece_type == Piece.PieceType.QUEEN:
+			piece.body.frame = 9
+		elif piece_type == Piece.PieceType.BISHOP:
+			piece.body.frame = 8
+		elif piece_type == Piece.PieceType.KNIGHT:
+			piece.body.frame = 7
+		elif piece_type == Piece.PieceType.TOWER:
+			piece.body.frame = 6
+	else:
+		if piece_type == Piece.PieceType.QUEEN:
+			piece.body.frame = 3
+		elif piece_type == Piece.PieceType.BISHOP:
+			piece.body.frame = 2
+		elif piece_type == Piece.PieceType.KNIGHT:
+			piece.body.frame = 1
+		elif piece_type == Piece.PieceType.TOWER:
+			piece.body.frame = 0
+	
+	
 func ready():
 	%Cover.visible = false
 
@@ -452,7 +542,7 @@ func update_in_sight():
 		var cell: Cell = cells[k]
 		cell.in_sight = false
 
-	var pieces = white_pieces if is_white_turn else black_pieces
+	var pieces = white_pieces if (player_is_white if Data.is_online else is_white_turn) else black_pieces
 	for piece in pieces:
 		var piece_cell = get_cell(Vector3i(piece.position))
 		piece_cell.in_sight = true
@@ -484,8 +574,16 @@ func update_in_sight():
 
 
 func switch_color():
+	if Data.is_online:
+		%Waiting.visible = not player_is_white == is_white_turn
+		if player_is_white == is_white_turn:
+			%Camera/Camera3D/AudioStreamPlayer3D.play()
+	elif not Data.is_online:
+		%Cover.visible = true
+		
 	update_in_sight()
-	camera.reset(is_white_turn)
+	
+	camera.reset(player_is_white if Data.is_online else is_white_turn)
 	
 
 func reset_game():
@@ -500,11 +598,12 @@ func win(white_is_winner):
 			cell.piece.visible = true
 			
 	%Win.visible = true
+	%Promotion.visible = false
 	if white_is_winner:
 		%WhiteWinner.visible = true
 	else:
 		%BlackWinner.visible = true
 
 
-func get_cell(_position):
+func get_cell(_position) -> Cell:
 	return cells.get(Vector3i(floor(_position.x), 0, floor(_position.z)))

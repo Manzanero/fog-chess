@@ -5289,12 +5289,14 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 302.0
-offset_top = 362.0
+offset_top = 84.0
 offset_right = -274.0
-offset_bottom = 410.0
+offset_bottom = 132.0
 grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("5_420hn")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 24
 text = "Wait..."
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -5359,8 +5361,40 @@ theme_override_fonts/font = ExtResource("5_ka1pj")
 theme_override_font_sizes/font_size = 27
 text = "Fog Chess"
 
+[node name="MatchLabel" type="Label" parent="Ui"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -198.0
+offset_top = 23.0
+offset_right = -58.0
+offset_bottom = 59.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 0.862745)
+theme_override_fonts/font = ExtResource("5_ka1pj")
+theme_override_font_sizes/font_size = 27
+text = "Code:"
+
+[node name="MatchCode" type="Label" parent="Ui"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -161.0
+offset_top = 32.0
+offset_right = -36.0
+offset_bottom = 57.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 0.862745)
+theme_override_fonts/font = ExtResource("5_420hn")
+theme_override_font_sizes/font_size = 21
+text = "1234"
+horizontal_alignment = 2
+
 [node name="ResetWhiteButton" type="Button" parent="Ui"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -5374,6 +5408,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_gb6qm")
 
 [node name="ResetBlackButton" type="Button" parent="Ui"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

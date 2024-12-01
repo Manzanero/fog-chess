@@ -2,7 +2,7 @@ class_name Cell
 extends Node3D
 
 
-var piece = null :
+var piece: Piece = null :
 	get:
 		if not weakref(piece).get_ref():  # if queued free
 			return null

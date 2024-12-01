@@ -65,10 +65,10 @@ anchor_left = 0.5
 anchor_top = 0.23
 anchor_right = 0.5
 anchor_bottom = 0.23
-offset_left = -18.0
-offset_top = -19.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -14.0
+offset_top = -2.0
+offset_right = 24.0
+offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -76,7 +76,7 @@ size_flags_horizontal = 4
 [node name="Icon" type="Sprite2D" parent="CanvasLayer/Control"]
 texture_filter = 3
 position = Vector2(35, 16)
-scale = Vector2(4.375, 4.375)
+scale = Vector2(5.975, 5.975)
 texture = ExtResource("3_lodpf")
 
 [node name="MainMenu" type="Control" parent="CanvasLayer"]
@@ -85,9 +85,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 140.0
-offset_top = 194.0
+offset_top = 222.0
 offset_right = -117.0
-offset_bottom = -39.0
+offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -103,6 +103,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vkp7o")
 
 [node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/Panel"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -110,12 +111,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -249.5
-offset_top = -158.5
+offset_top = -146.0
 offset_right = 250.5
-offset_bottom = 168.5
+offset_bottom = 169.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 38
+theme_override_constants/separation = 24
 
 [node name="LocalGameButton" type="Button" parent="CanvasLayer/MainMenu/Panel/HBoxContainer"]
 unique_name_in_owner = true
@@ -245,5 +246,111 @@ text = "Join an online game as black side"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Code" type="Control" parent="CanvasLayer/MainMenu/Panel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/Panel/Code"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -140.0
+offset_bottom = -121.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.0862745, 0.172549, 0.121569, 1)
+theme_override_fonts/font = ExtResource("3_yqi2w")
+text = "Enter code:"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Error" type="Label" parent="CanvasLayer/MainMenu/Panel/Code"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 23.0
+offset_top = 71.0
+offset_right = -23.0
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.827451, 0.227451, 0.309804, 0.933333)
+theme_override_fonts/font = ExtResource("3_yqi2w")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CodeJoinGameButton" type="Button" parent="CanvasLayer/MainMenu/Panel/Code"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(227.493, 80)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.746
+offset_top = -40.0
+offset_right = 113.746
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_ia02k")
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/Panel/Code/CodeJoinGameButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.689
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("3_yqi2w")
+text = "Join a Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CodeJoinGameInput" type="LineEdit" parent="CanvasLayer/MainMenu/Panel/Code"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.5
+offset_top = -109.0
+offset_right = 188.5
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_yqi2w")
+placeholder_text = "...."
+alignment = 1
+max_length = 4
+virtual_keyboard_type = 4
+clear_button_enabled = true
+draw_control_chars = true
+select_all_on_focus = true
+caret_blink = true
 
 [node name="CurrentScene" type="Node" parent="."]
